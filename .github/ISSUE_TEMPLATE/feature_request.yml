@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest an improvement to Mac Thermals.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe what you're trying to do and what gets in the way.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Fit with the plan
+      description: Does this fit a phase in docs/PLAN.md, or is it new? Anything else we should know?

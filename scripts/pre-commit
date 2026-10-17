@@ -1,0 +1,5 @@
+#!/bin/sh
+# Runs the same lint checks as CI before every commit. Install with `make hooks`.
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+exec make lint
