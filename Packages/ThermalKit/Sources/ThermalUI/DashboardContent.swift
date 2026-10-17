@@ -110,7 +110,7 @@ private struct DashboardFooter: View {
 }
 
 @MainActor
-private func preview(_ pressureLevel: ThermalPressureLevel?, _ thermalState: ThermalStateLevel?) -> some View {
+private func dashboardPreview(_ pressureLevel: ThermalPressureLevel?, _ thermalState: ThermalStateLevel?) -> some View {
     let evidence: [(any ThrottleEvidence)?] = [pressureLevel, thermalState]
     return DashboardContent(
         assessment: ThrottleAssessment(evidence: evidence.compactMap(\.self)),
@@ -119,17 +119,17 @@ private func preview(_ pressureLevel: ThermalPressureLevel?, _ thermalState: The
     )
 }
 
-#Preview("Nominal, light") { preview(.nominal, .nominal).preferredColorScheme(.light) }
-#Preview("Nominal, dark") { preview(.nominal, .nominal).preferredColorScheme(.dark) }
-#Preview("Moderate, light") { preview(.moderate, .fair).preferredColorScheme(.light) }
-#Preview("Moderate, dark") { preview(.moderate, .fair).preferredColorScheme(.dark) }
-#Preview("Heavy, light") { preview(.heavy, .fair).preferredColorScheme(.light) }
-#Preview("Heavy, dark") { preview(.heavy, .fair).preferredColorScheme(.dark) }
-#Preview("Trapping, light") { preview(.trapping, .serious).preferredColorScheme(.light) }
-#Preview("Trapping, dark") { preview(.trapping, .serious).preferredColorScheme(.dark) }
-#Preview("Sleeping, light") { preview(.sleeping, .critical).preferredColorScheme(.light) }
-#Preview("Sleeping, dark") { preview(.sleeping, .critical).preferredColorScheme(.dark) }
-#Preview("Unknown pressure, light") { preview(.unknown(rawState: 7), .serious).preferredColorScheme(.light) }
-#Preview("Unknown pressure, dark") { preview(.unknown(rawState: 7), .serious).preferredColorScheme(.dark) }
-#Preview("Not available, light") { preview(nil, nil).preferredColorScheme(.light) }
-#Preview("Not available, dark") { preview(nil, nil).preferredColorScheme(.dark) }
+#Preview("Nominal, light") { dashboardPreview(.nominal, .nominal).preferredColorScheme(.light) }
+#Preview("Nominal, dark") { dashboardPreview(.nominal, .nominal).preferredColorScheme(.dark) }
+#Preview("Moderate, light") { dashboardPreview(.moderate, .fair).preferredColorScheme(.light) }
+#Preview("Moderate, dark") { dashboardPreview(.moderate, .fair).preferredColorScheme(.dark) }
+#Preview("Heavy, light") { dashboardPreview(.heavy, .fair).preferredColorScheme(.light) }
+#Preview("Heavy, dark") { dashboardPreview(.heavy, .fair).preferredColorScheme(.dark) }
+#Preview("Trapping, light") { dashboardPreview(.trapping, .serious).preferredColorScheme(.light) }
+#Preview("Trapping, dark") { dashboardPreview(.trapping, .serious).preferredColorScheme(.dark) }
+#Preview("Sleeping, light") { dashboardPreview(.sleeping, .critical).preferredColorScheme(.light) }
+#Preview("Sleeping, dark") { dashboardPreview(.sleeping, .critical).preferredColorScheme(.dark) }
+#Preview("Unknown pressure, light") { dashboardPreview(.unknown(rawState: 7), .serious).preferredColorScheme(.light) }
+#Preview("Unknown pressure, dark") { dashboardPreview(.unknown(rawState: 7), .serious).preferredColorScheme(.dark) }
+#Preview("Not available, light") { dashboardPreview(nil, nil).preferredColorScheme(.light) }
+#Preview("Not available, dark") { dashboardPreview(nil, nil).preferredColorScheme(.dark) }
