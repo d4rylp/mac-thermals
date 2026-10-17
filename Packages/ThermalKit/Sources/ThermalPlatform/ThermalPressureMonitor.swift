@@ -1,15 +1,20 @@
-import Darwin
 import Dispatch
 import ThermalCore
+import notify
 import os
 
 /// Observes the system thermal pressure level through Darwin notify.
 ///
-/// The monitor reads the `com.apple.system.thermalpressurelevel` notify key, declared as
-/// `kOSThermalNotificationPressureLevelName` in `<libkern/OSThermalNotification.h>`. It doesn't poll:
-/// the current level comes from `notify_register_check` and `notify_get_state`, and changes are
-/// pushed by `notify_register_dispatch`.
+/// The monitor doesn't poll: the current level comes from `notify_register_check` and
+/// `notify_get_state`, and changes are pushed by `notify_register_dispatch`.
 public struct ThermalPressureMonitor: ThermalPressureSource {
+    /// The notify key for the thermal pressure level.
+    ///
+    /// The public header `<libkern/OSThermalNotification.h>` declares it as
+    /// `kOSThermalNotificationPressureLevelName`, but the constant doesn't import into Swift, so the
+    /// key is spelled out here.
+    private static let notificationName = "com.apple.system.thermalpressurelevel"
+
     private static let logger = Logger(subsystem: Log.subsystem, category: "ThermalPressureMonitor")
     private static let queue = DispatchQueue(label: "io.github.d4rylp.MacThermals.ThermalPressureMonitor")
 
@@ -24,7 +29,7 @@ public struct ThermalPressureMonitor: ThermalPressureSource {
         AsyncStream { continuation in
             var dispatchToken: Int32 = NOTIFY_TOKEN_INVALID
             let registration = notify_register_dispatch(
-                kOSThermalNotificationPressureLevelName,
+                Self.notificationName,
                 &dispatchToken,
                 Self.queue
             ) { token in
@@ -54,7 +59,7 @@ public struct ThermalPressureMonitor: ThermalPressureSource {
     /// Reads the current level with a short-lived check registration.
     private static func currentLevel() -> ThermalPressureLevel? {
         var checkToken: Int32 = NOTIFY_TOKEN_INVALID
-        let registration = notify_register_check(kOSThermalNotificationPressureLevelName, &checkToken)
+        let registration = notify_register_check(notificationName, &checkToken)
         guard registration == NOTIFY_STATUS_OK else {
             logger.error("notify_register_check failed with status \(registration)")
             return nil
