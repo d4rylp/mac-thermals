@@ -12,7 +12,7 @@ final class MacThermalsUITests: XCTestCase {
         let continueButton = app.buttons["Continue"]
         XCTAssertTrue(continueButton.waitForExistence(timeout: 10))
         XCTAssertTrue(element(in: app, labeled: "Welcome to Mac Thermals").exists)
-        XCTAssertTrue(element(in: app, labeled: "Launch at login").exists)
+        XCTAssertTrue(app.switches["Launch at login"].exists)
 
         continueButton.click()
         XCTAssertTrue(continueButton.waitForNonExistence(timeout: 5))
@@ -47,19 +47,19 @@ final class MacThermalsUITests: XCTestCase {
         let app = launch(hasCompletedWelcome: true)
         openPanel(in: app)
         app.buttons["Settings…"].click()
-        assertAppears(element(in: app, labeled: "Launch at login"), in: app)
+        assertAppears(app.switches["Launch at login"], in: app)
         assertAppears(element(in: app, labeled: "Version"), in: app)
     }
 
     func testOpeningAgainWhileRunningShowsSettings() {
         let app = launch(hasCompletedWelcome: true)
         XCTAssertTrue(statusItem(in: app).waitForExistence(timeout: 10))
-        XCTAssertFalse(element(in: app, labeled: "Launch at login").exists)
+        XCTAssertFalse(app.switches["Launch at login"].exists)
 
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
         NSWorkspace.shared.openApplication(at: appURL(), configuration: configuration, completionHandler: nil)
-        assertAppears(element(in: app, labeled: "Launch at login"), in: app)
+        assertAppears(app.switches["Launch at login"], in: app)
     }
 
     func testQuitButtonQuitsApp() {
@@ -93,10 +93,15 @@ final class MacThermalsUITests: XCTestCase {
         assertAppears(app.buttons["Settings…"], in: app)
     }
 
-    /// Finds an element whose label or title starts with the given text. Combined accessibility
-    /// elements, such as a labelled row, append their value to the label.
+    /// Finds an element whose label, title or value starts with the given text. SwiftUI text exposes
+    /// its string as the value, and combined elements, such as a labelled row, append their value.
     private func element(in app: XCUIApplication, labeled label: String) -> XCUIElement {
-        let predicate = NSPredicate(format: "label BEGINSWITH %@ OR title BEGINSWITH %@", label, label)
+        let predicate = NSPredicate(
+            format: "label BEGINSWITH %@ OR title BEGINSWITH %@ OR value BEGINSWITH %@",
+            label,
+            label,
+            label
+        )
         return app.descendants(matching: .any).matching(predicate).firstMatch
     }
 

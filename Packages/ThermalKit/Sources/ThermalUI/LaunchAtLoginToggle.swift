@@ -31,6 +31,11 @@ struct LaunchAtLoginRow: View {
             Toggle(isOn: $isOn) {
                 Text("Launch at login", bundle: .module, comment: "Toggle that registers the app as a login item")
             }
+            // A grouped form lays the label out separately from the switch, which then has no
+            // accessibility label of its own.
+            .accessibilityLabel(
+                Text("Launch at login", bundle: .module, comment: "Toggle that registers the app as a login item")
+            )
             if let explanation {
                 Text(explanation)
                     .font(.caption)
