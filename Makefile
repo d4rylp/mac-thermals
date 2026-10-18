@@ -32,7 +32,9 @@ build: project ## Build the app (Debug)
 
 test: project ## Run the app tests and every ThermalKit test target
 	rm -rf $(RESULT_BUNDLE)
-	$(XCODEBUILD) -configuration Debug -resultBundlePath $(RESULT_BUNDLE) $(XCODEBUILD_FLAGS) test
+	$(XCODEBUILD) -configuration Debug -resultBundlePath $(RESULT_BUNDLE) \
+		-test-timeouts-enabled YES -default-test-execution-time-allowance 120 \
+		$(XCODEBUILD_FLAGS) test
 
 lint: ## Check SwiftLint (strict) and swift-format
 	swiftlint lint --strict --quiet

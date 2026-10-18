@@ -7,18 +7,6 @@ import XCTest
 /// assert a particular throttle status, because the runner's thermal pressure isn't controllable.
 @MainActor
 final class MacThermalsUITests: XCTestCase {
-    private var app: XCUIApplication?
-
-    override func setUp() async throws {
-        try await super.setUp()
-        continueAfterFailure = false
-    }
-
-    override func tearDown() async throws {
-        app?.terminate()
-        try await super.tearDown()
-    }
-
     func testFirstLaunchShowsWelcomeWindowUntilContinue() {
         let app = launch(hasCompletedWelcome: false)
         let continueButton = app.buttons["Continue"]
@@ -62,14 +50,14 @@ final class MacThermalsUITests: XCTestCase {
         XCTAssertTrue(element(in: app, labeled: "Version").exists)
     }
 
-    func testOpeningAgainWhileRunningShowsSettings() async throws {
+    func testOpeningAgainWhileRunningShowsSettings() {
         let app = launch(hasCompletedWelcome: true)
         XCTAssertTrue(statusItem(in: app).waitForExistence(timeout: 10))
         XCTAssertFalse(element(in: app, labeled: "Launch at login").exists)
 
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
-        _ = try await NSWorkspace.shared.openApplication(at: appURL(), configuration: configuration)
+        NSWorkspace.shared.openApplication(at: appURL(), configuration: configuration, completionHandler: nil)
         XCTAssertTrue(element(in: app, labeled: "Launch at login").waitForExistence(timeout: 10))
     }
 
@@ -83,12 +71,13 @@ final class MacThermalsUITests: XCTestCase {
     // MARK: - Helpers
 
     /// Launches the app with the welcome flag set through the arguments domain, so the test
-    /// doesn't depend on, or change, which window a previous run left behind.
+    /// doesn't depend on, or change, which window a previous run left behind. Launching also
+    /// terminates any instance an earlier test left running.
     private func launch(hasCompletedWelcome: Bool) -> XCUIApplication {
+        continueAfterFailure = false
         let app = XCUIApplication()
         app.launchArguments = ["-hasCompletedWelcome", hasCompletedWelcome ? "YES" : "NO"]
         app.launch()
-        self.app = app
         return app
     }
 
