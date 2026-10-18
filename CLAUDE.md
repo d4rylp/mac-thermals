@@ -22,7 +22,7 @@ App Store because later phases read private SMC/HID APIs.
 ```sh
 make project   # xcodegen generate (MacThermals.xcodeproj is generated, never committed)
 make build     # Debug build of the app
-make test      # app tests + all ThermalKit test targets via xcodebuild
+make test      # app unit + UI tests and all ThermalKit test targets via xcodebuild
 make lint      # swiftlint --strict and swift format lint --strict
 make format    # swift format in place
 make install   # Release build copied to /Applications
@@ -56,7 +56,8 @@ test environment.
   `Sendable`.
 - Deployment target macOS 27.0, `arm64` only. No `#available` checks.
 - Warnings are errors everywhere. SwiftLint strict; swift-format strict; they agree.
-- Public API has doc comments. Tests use Swift Testing.
+- Public API has doc comments. Tests use Swift Testing; UI tests (`AppUITests`) use XCTest because
+  Swift Testing can't drive `XCUIApplication`.
 - All user-facing text in String Catalogs (`bundle: .module` in package code); no sentences built by
   concatenation. Long strings use multi-line literals with `\` continuations.
 - `os.Logger` with subsystem `io.github.d4rylp.MacThermals.<Module>`.

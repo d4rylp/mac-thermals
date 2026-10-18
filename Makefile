@@ -10,7 +10,7 @@ SOURCE_PACKAGES := $(BUILD_DIR)/SourcePackages
 RESULT_BUNDLE := $(BUILD_DIR)/TestResults.xcresult
 APP_NAME := Mac Thermals.app
 INSTALL_DIR := /Applications
-FORMAT_PATHS := App AppTests Packages/ThermalKit/Package.swift Packages/ThermalKit/Sources Packages/ThermalKit/Tests
+FORMAT_PATHS := App AppTests AppUITests Packages/ThermalKit/Package.swift Packages/ThermalKit/Sources Packages/ThermalKit/Tests
 
 # Extra xcodebuild arguments, for example XCODEBUILD_FLAGS=CODE_SIGNING_ALLOWED=NO in CI.
 XCODEBUILD_FLAGS ?=

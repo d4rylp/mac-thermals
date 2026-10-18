@@ -41,6 +41,7 @@ App/                                  [1] App target "Mac Thermals" (menu bar ag
   Icon.icon                           [5] Layered app icon from Icon Composer
   Updater.swift                       [6] Sparkle 2 updater controller (app target only)
 AppTests/                             [1] Hosted app tests (bundle configuration)
+AppUITests/                           [1] XCUITest: welcome window, panel, Settings, reopen
 Config/
   Base.xcconfig                       [1] Signing defaults; `#include? "Local.xcconfig"`
   Local.xcconfig                      [1] Optional, gitignored: personal DEVELOPMENT_TEAM
@@ -281,6 +282,9 @@ formatters.
   exist in SF Symbols.
 - `AppTests`: hosted in the app; verify the built bundle's configuration (agent app, bundle
   identifier, deployment target).
+- `AppUITests`: XCUITest (Swift Testing can't drive `XCUIApplication`) launches the built app and
+  drives the welcome window, the menu bar panel (Esc, Settings…, Quit), Settings and reopen handling.
+  [4] adds the History window.
 - `ThermalHistoryTests` (phase 4): in-memory database.
 
 ## Build configuration

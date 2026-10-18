@@ -3,6 +3,7 @@
 included:
   - App
   - AppTests
+  - AppUITests
   - Packages/ThermalKit/Package.swift
   - Packages/ThermalKit/Sources
   - Packages/ThermalKit/Tests

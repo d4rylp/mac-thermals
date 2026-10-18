@@ -67,6 +67,7 @@ call it out in the pull request description.
 - Formatting is swift-format (`.swift-format`); linting is SwiftLint (`.swiftlint.yml`) in strict
   mode. They are configured not to conflict. Warnings are errors.
 - Public API has doc comments.
-- Tests use Swift Testing, parameterised where sensible.
+- Tests use Swift Testing, parameterised where sensible. UI tests in `AppUITests` use XCTest, because
+  Swift Testing can't drive `XCUIApplication`.
 - All user-facing text goes in String Catalogs; package code passes `bundle: .module`.
 - Logging uses `os.Logger` with the module's subsystem, `io.github.d4rylp.MacThermals.<Module>`.
