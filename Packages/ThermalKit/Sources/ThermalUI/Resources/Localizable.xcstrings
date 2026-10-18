@@ -1,0 +1,93 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ (%@)" : {
+      "comment" : "App version and build number"
+    },
+    "About" : {
+      "comment" : "Settings section title"
+    },
+    "Continue" : {
+      "comment" : "Welcome window button that closes the window"
+    },
+    "General" : {
+      "comment" : "Settings section title"
+    },
+    "It lives in the menu bar as a thermometer icon. If your menu bar is full, the icon may be in the menu bar’s overflow. You can always open Mac Thermals again from the Applications folder to show its settings." : {
+      "comment" : "Welcome window: where the app lives"
+    },
+    "Launch at login" : {
+      "comment" : "Toggle that registers the app as a login item"
+    },
+    "License" : {
+      "comment" : "Settings label for the license"
+    },
+    "Mac Thermals lives in the menu bar as a thermometer icon. If you can’t see it, your menu bar may be full: look in the menu bar’s overflow, or open Mac Thermals again from the Applications folder to show this window." : {
+      "comment" : "Settings note on finding the menu bar icon"
+    },
+    "Mac Thermals needs your approval in System Settings before it can open at login." : {
+      "comment" : "Explanation when the login item awaits the user's approval"
+    },
+    "Mac Thermals opens automatically when you log in." : {
+      "comment" : "Explanation when the app is registered as a login item"
+    },
+    "Mac Thermals tells you when your Mac is throttling: reducing its performance to cool down." : {
+      "comment" : "Welcome window: what the app does"
+    },
+    "Mac Thermals, not throttling" : {
+      "comment" : "Menu bar accessibility label when the Mac isn't throttling"
+    },
+    "Mac Thermals, status unavailable" : {
+      "comment" : "Menu bar accessibility label when no thermal information is available"
+    },
+    "Mac Thermals, throttling as much as possible" : {
+      "comment" : "Menu bar accessibility label for critical throttling"
+    },
+    "Mac Thermals, throttling significantly" : {
+      "comment" : "Menu bar accessibility label for heavy throttling"
+    },
+    "Mac Thermals, throttling slightly" : {
+      "comment" : "Menu bar accessibility label for moderate throttling"
+    },
+    "Not available" : {
+      "comment" : "Value of a signal macOS isn't reporting"
+    },
+    "Open Login Items Settings…" : {
+      "comment" : "Button that opens the Login Items pane of System Settings"
+    },
+    "Quit Mac Thermals" : {
+      "comment" : "Dashboard button that quits the app"
+    },
+    "Settings…" : {
+      "comment" : "Dashboard button that opens the Settings window"
+    },
+    "Source code" : {
+      "comment" : "Settings label for the repository link"
+    },
+    "System thermal state" : {
+      "comment" : "Dashboard row label for the ProcessInfo state"
+    },
+    "Thermal pressure" : {
+      "comment" : "Dashboard row label for the thermal pressure level"
+    },
+    "Unknown" : {
+      "comment" : "Shown when the app's version can't be read"
+    },
+    "Version" : {
+      "comment" : "Settings label for the app version"
+    },
+    "Welcome to Mac Thermals" : {
+      "comment" : "Welcome window headline"
+    },
+    "[MIT License](https://github.com/d4rylp/mac-thermals/blob/main/LICENSE)" : {
+      "comment" : "Link to the license text"
+    },
+    "[github.com/d4rylp/mac-thermals](https://github.com/d4rylp/mac-thermals)" : {
+      "comment" : "Link to the source code repository"
+    },
+    "macOS can’t register Mac Thermals as a login item. Move the app to the Applications folder and try again." : {
+      "comment" : "Explanation when the system can't find the app to register it as a login item"
+    }
+  },
+  "version" : "1.0"
+}

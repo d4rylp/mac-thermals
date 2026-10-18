@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Xcode
+MacThermals.xcodeproj/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcresult
+DerivedData/
+
+# Build output (Makefile)
+build/
+
+# SwiftPM
+.build/
+.swiftpm/
+
+# Personal signing settings
+Config/Local.xcconfig

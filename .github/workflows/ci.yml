@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The Xcode 27 runner image is in public preview (actions/runner-images#14404). Pin the exact
+  # Xcode rather than the image default.
+  DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
+  SWIFTLINT_VERSION: 0.65.1
+  XCODEGEN_VERSION: 2.46.0
+
+jobs:
+  lint:
+    name: lint
+    runs-on: xcode-27
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
+        run: |
+          curl --fail --silent --show-error --location --output "$RUNNER_TEMP/swiftlint.zip" \
+            "https://github.com/realm/SwiftLint/releases/download/${SWIFTLINT_VERSION}/portable_swiftlint.zip"
+          unzip -q "$RUNNER_TEMP/swiftlint.zip" -d "$RUNNER_TEMP/swiftlint"
+          echo "$RUNNER_TEMP/swiftlint" >> "$GITHUB_PATH"
+
+      - name: Tool versions
+        run: |
+          xcodebuild -version
+          swift --version
+          swiftlint version
+
+      - name: Lint
+        run: make lint
+
+  build-test:
+    name: build-test
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install XcodeGen ${{ env.XCODEGEN_VERSION }}
+        run: |
+          curl --fail --silent --show-error --location --output "$RUNNER_TEMP/xcodegen.zip" \
+            "https://github.com/yonaskolb/XcodeGen/releases/download/${XCODEGEN_VERSION}/xcodegen.zip"
+          unzip -q "$RUNNER_TEMP/xcodegen.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/xcodegen/bin" >> "$GITHUB_PATH"
+
+      - name: Tool versions
+        run: |
+          sw_vers
+          xcodebuild -version
+          xcodegen --version
+
+      - name: Cache SwiftPM
+        uses: actions/cache@v6
+        with:
+          path: build/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('Packages/ThermalKit/Package.swift', 'Packages/ThermalKit/Package.resolved', 'project.yml') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Build (unsigned)
+        run: make build XCODEBUILD_FLAGS=CODE_SIGNING_ALLOWED=NO
+
+      - name: Test
+        run: make test XCODEBUILD_FLAGS=CODE_SIGNING_ALLOWED=NO
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: TestResults.xcresult
+          path: build/TestResults.xcresult
+          if-no-files-found: ignore

@@ -1,0 +1,16 @@
+// Signing defaults for every target. Anyone can build with "Sign to Run Locally" (ad hoc), without
+// an Apple account.
+//
+// To sign with your own team, create Config/Local.xcconfig (gitignored), for example:
+//
+//     DEVELOPMENT_TEAM = ABCDE12345
+//     CODE_SIGN_IDENTITY = Apple Development
+//
+// Settings here are applied below project.yml target settings, so project.yml must not set any of
+// these keys.
+
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = -
+DEVELOPMENT_TEAM =
+
+#include? "Local.xcconfig"

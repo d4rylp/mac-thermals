@@ -1,0 +1,114 @@
+# SwiftLint 0.65.x. Run with --strict: every warning is an error.
+
+included:
+  - App
+  - AppTests
+  - AppUITests
+  - Packages/ThermalKit/Package.swift
+  - Packages/ThermalKit/Sources
+  - Packages/ThermalKit/Tests
+
+excluded:
+  - build
+  - DerivedData
+  - MacThermals.xcodeproj
+  - Packages/ThermalKit/.build
+  - Packages/ThermalKit/.swiftpm
+
+opt_in_rules:
+  - accessibility_label_for_image
+  - accessibility_trait_for_button
+  - array_init
+  - async_without_await
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - convenience_type
+  - direct_return
+  - discouraged_assert
+  - discouraged_none_name
+  - discouraged_object_literal
+  - discouraged_optional_boolean
+  - discouraged_optional_collection
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - flatmap_over_map_reduce
+  - force_unwrapping
+  - identical_operands
+  - implicitly_unwrapped_optional
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - legacy_objc_type
+  - local_doc_comment
+  - lower_acl_than_parent
+  - missing_docs
+  - modifier_order
+  - nslocalizedstring_key
+  - nslocalizedstring_require_bundle
+  - optional_enum_case_matching
+  - overridden_super_call
+  - period_spacing
+  - prefer_key_path
+  - prefer_self_in_static_references
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - private_swiftui_state
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - reduce_into
+  - return_value_from_void_function
+  - self_binding
+  - shorthand_optional_binding
+  - sorted_first_last
+  - static_operator
+  - strict_fileprivate
+  - superfluous_else
+  - test_case_accessibility
+  - toggle_bool
+  - unavailable_function
+  - unhandled_throwing_task
+  - unneeded_parentheses_in_closure_argument
+  - unneeded_throws_rethrows
+  - unowned_variable_capture
+  - untyped_error_in_catch
+  - weak_delegate
+  - yoda_condition
+
+# Default rules that must stay on are listed for emphasis: `todo` makes TODO/FIXME an error under
+# --strict, and force_try / force_cast are errors everywhere, tests included (tests use #require).
+force_cast: error
+force_try: error
+force_unwrapping: error
+todo: error
+
+line_length:
+  warning: 120
+  ignores_urls: true
+
+file_length:
+  warning: 400
+
+function_body_length:
+  warning: 50
+
+type_body_length:
+  warning: 250
+
+cyclomatic_complexity:
+  warning: 10
+  ignores_case_statements: true
+
+identifier_name:
+  min_length: 2
+
+trailing_comma:
+  mandatory_comma: true

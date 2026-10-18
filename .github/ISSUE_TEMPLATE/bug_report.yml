@@ -1,0 +1,47 @@
+name: Bug report
+description: Something in Mac Thermals doesn't work as expected.
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect to see?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: mac
+    attributes:
+      label: Mac model
+      description: From  > About This Mac, for example "MacBook Air (13-inch, M4, 2025)".
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "27.0.1"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Mac Thermals version or commit
+      description: The version in Settings > About, or the commit you built from.
+    validations:
+      required: true
+  - type: textarea
+    id: pressure
+    attributes:
+      label: Thermal pressure level
+      description: If the status looks wrong, paste the output of `notifyutil -g com.apple.system.thermalpressurelevel`.
+      render: shell

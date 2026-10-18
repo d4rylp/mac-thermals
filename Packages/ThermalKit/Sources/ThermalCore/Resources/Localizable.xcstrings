@@ -1,0 +1,60 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Critical" : {
+      "comment" : "Thermal state name"
+    },
+    "Fair" : {
+      "comment" : "Thermal state name"
+    },
+    "Heavy" : {
+      "comment" : "Thermal pressure level name"
+    },
+    "Moderate" : {
+      "comment" : "Thermal pressure level name"
+    },
+    "Nominal" : {
+      "comment" : "Thermal pressure level or thermal state name"
+    },
+    "Not throttling" : {
+      "comment" : "Headline when the Mac runs at full performance"
+    },
+    "Serious" : {
+      "comment" : "Thermal state name"
+    },
+    "Sleeping" : {
+      "comment" : "Thermal pressure level name"
+    },
+    "Status unavailable" : {
+      "comment" : "Headline when macOS isn't reporting any thermal information"
+    },
+    "Throttling" : {
+      "comment" : "Headline when the Mac reduces performance to cool down"
+    },
+    "Trapping" : {
+      "comment" : "Thermal pressure level name"
+    },
+    "Unrecognized (%lld)" : {
+      "comment" : "Thermal state the app doesn't recognise; the number is the raw state"
+    },
+    "Unrecognized (%llu)" : {
+      "comment" : "Thermal pressure level the app doesn't recognise; the number is the raw level"
+    },
+    "Your Mac is reducing performance as much as it can to cool down." : {
+      "comment" : "Explanation for critical throttling"
+    },
+    "Your Mac is reducing performance significantly to cool down." : {
+      "comment" : "Explanation for heavy throttling"
+    },
+    "Your Mac is reducing performance slightly to cool down." : {
+      "comment" : "Explanation for moderate throttling"
+    },
+    "Your Mac is running at full performance." : {
+      "comment" : "Explanation when the Mac isn't throttling"
+    },
+    "macOS isn’t reporting thermal pressure or thermal state right now." : {
+      "comment" : "Explanation when no thermal information is available"
+    }
+  },
+  "version" : "1.0"
+}
