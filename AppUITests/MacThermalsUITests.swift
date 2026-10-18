@@ -27,16 +27,17 @@ final class MacThermalsUITests: XCTestCase {
     func testStatusItemStatesStatus() {
         let app = launch(hasCompletedWelcome: true)
         let item = statusItem(in: app)
-        XCTAssertTrue(item.waitForExistence(timeout: 10))
-        XCTAssertTrue(item.label.hasPrefix("Mac Thermals, "), "Unexpected label \(item.label)")
+        assertAppears(item, in: app)
+        // A status item exposes its accessibility label to XCTest as its title.
+        XCTAssertTrue(item.title.hasPrefix("Mac Thermals, "), "Unexpected title \(item.title)")
     }
 
     func testPanelShowsSignalsAndClosesWithEscape() {
         let app = launch(hasCompletedWelcome: true)
         openPanel(in: app)
-        XCTAssertTrue(element(in: app, labeled: "Thermal pressure").exists)
-        XCTAssertTrue(element(in: app, labeled: "System thermal state").exists)
-        XCTAssertTrue(app.buttons["Quit Mac Thermals"].exists)
+        assertAppears(element(in: app, labeled: "Thermal pressure"), in: app)
+        assertAppears(element(in: app, labeled: "System thermal state"), in: app)
+        assertAppears(app.buttons["Quit Mac Thermals"], in: app)
 
         app.typeKey(.escape, modifierFlags: [])
         XCTAssertTrue(app.buttons["Settings…"].waitForNonExistence(timeout: 5))
@@ -46,8 +47,8 @@ final class MacThermalsUITests: XCTestCase {
         let app = launch(hasCompletedWelcome: true)
         openPanel(in: app)
         app.buttons["Settings…"].click()
-        XCTAssertTrue(element(in: app, labeled: "Launch at login").waitForExistence(timeout: 10))
-        XCTAssertTrue(element(in: app, labeled: "Version").exists)
+        assertAppears(element(in: app, labeled: "Launch at login"), in: app)
+        assertAppears(element(in: app, labeled: "Version"), in: app)
     }
 
     func testOpeningAgainWhileRunningShowsSettings() {
@@ -58,7 +59,7 @@ final class MacThermalsUITests: XCTestCase {
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
         NSWorkspace.shared.openApplication(at: appURL(), configuration: configuration, completionHandler: nil)
-        XCTAssertTrue(element(in: app, labeled: "Launch at login").waitForExistence(timeout: 10))
+        assertAppears(element(in: app, labeled: "Launch at login"), in: app)
     }
 
     func testQuitButtonQuitsApp() {
@@ -87,13 +88,29 @@ final class MacThermalsUITests: XCTestCase {
 
     private func openPanel(in app: XCUIApplication) {
         let item = statusItem(in: app)
-        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        assertAppears(item, in: app)
         item.click()
-        XCTAssertTrue(app.buttons["Settings…"].waitForExistence(timeout: 5))
+        assertAppears(app.buttons["Settings…"], in: app)
     }
 
+    /// Finds an element whose label or title starts with the given text. Combined accessibility
+    /// elements, such as a labelled row, append their value to the label.
     private func element(in app: XCUIApplication, labeled label: String) -> XCUIElement {
-        app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", label)).firstMatch
+        let predicate = NSPredicate(format: "label BEGINSWITH %@ OR title BEGINSWITH %@", label, label)
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+
+    /// Waits for an element and, if it never appears, fails with the app's accessibility hierarchy
+    /// so the log shows what was on screen instead.
+    private func assertAppears(
+        _ element: XCUIElement,
+        in app: XCUIApplication,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        if !element.waitForExistence(timeout: 10) {
+            XCTFail("\(element) didn't appear. Hierarchy:\n\(app.debugDescription)", file: file, line: line)
+        }
     }
 
     /// The app bundle sits next to the UI test runner in the build products directory.
