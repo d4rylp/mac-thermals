@@ -11,8 +11,9 @@ final class MacThermalsUITests: XCTestCase {
         let app = launch(hasCompletedWelcome: false)
         let continueButton = app.buttons["Continue"]
         XCTAssertTrue(continueButton.waitForExistence(timeout: 10))
-        XCTAssertTrue(element(in: app, labeled: "Welcome to Mac Thermals").exists)
-        XCTAssertTrue(app.switches["Launch at login"].exists)
+        assertAppears(element(in: app, labeled: "Welcome to Mac Thermals"), in: app)
+        // Outside a grouped form, macOS draws the toggle as a checkbox.
+        assertAppears(app.checkBoxes["Launch at login"], in: app)
 
         continueButton.click()
         XCTAssertTrue(continueButton.waitForNonExistence(timeout: 5))
