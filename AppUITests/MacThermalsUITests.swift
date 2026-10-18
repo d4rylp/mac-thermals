@@ -9,12 +9,14 @@ import XCTest
 final class MacThermalsUITests: XCTestCase {
     private var app: XCUIApplication?
 
-    override func setUp() async {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
     }
 
-    override func tearDown() async {
+    override func tearDown() async throws {
         app?.terminate()
+        try await super.tearDown()
     }
 
     func testFirstLaunchShowsWelcomeWindowUntilContinue() {
